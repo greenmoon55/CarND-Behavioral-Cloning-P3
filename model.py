@@ -62,26 +62,27 @@ def generator(X, y, batch_size=32):
 train_generator = generator(center, steering, batch_size=32)
 validation_generator = generator(X_valid, y_valid, batch_size=32)
 
-model = Sequential()
-model.add(Cropping2D(cropping=((50, 20), (0, 0)), input_shape=(80, 80, 3)))
-model.add(Lambda(lambda x: (x / 255.0) - 0.5))
-model.add(Convolution2D(24, 5, 5, border_mode='valid', subsample=(2,2), W_regularizer=l2(0.001)))
-model.add(Activation('relu'))
-model.add(Convolution2D(64, 3, 3, border_mode='valid', subsample=(2,2), W_regularizer=l2(0.001)))
-model.add(Activation('relu'))
-model.add(Dropout(0.5))
-model.add(Flatten())
-model.add(Dense(40, W_regularizer=l2(0.001)))
-model.add(Dense(10, W_regularizer=l2(0.001)))
-model.add(Dense(1, W_regularizer=l2(0.001)))
-model.compile(optimizer=Adam(lr=0.0001), loss='mse', metrics=['accuracy'])
-model.summary()
+if __name__ == "__main__":
+    model = Sequential()
+    model.add(Cropping2D(cropping=((50, 20), (0, 0)), input_shape=(80, 80, 3)))
+    model.add(Lambda(lambda x: (x / 255.0) - 0.5))
+    model.add(Convolution2D(24, 5, 5, border_mode='valid', subsample=(2,2), W_regularizer=l2(0.001)))
+    model.add(Activation('relu'))
+    model.add(Convolution2D(64, 3, 3, border_mode='valid', subsample=(2,2), W_regularizer=l2(0.001)))
+    model.add(Activation('relu'))
+    model.add(Dropout(0.5))
+    model.add(Flatten())
+    model.add(Dense(40, W_regularizer=l2(0.001)))
+    model.add(Dense(10, W_regularizer=l2(0.001)))
+    model.add(Dense(1, W_regularizer=l2(0.001)))
+    model.compile(optimizer=Adam(lr=0.0001), loss='mse', metrics=['accuracy'])
+    model.summary()
 
-model.fit_generator(train_generator, validation_data=validation_generator,
-                    nb_epoch=FLAGS.epochs, samples_per_epoch=len(center),
-                    nb_val_samples=len(X_valid))
+    model.fit_generator(train_generator, validation_data=validation_generator,
+                        nb_epoch=FLAGS.epochs, samples_per_epoch=len(center),
+                        nb_val_samples=len(X_valid))
 
-model.save('model.h5')
-model_json = model.to_json()
-with open("model.json", "w") as json_file:
-    json_file.write(model_json)
+    model.save('model.h5')
+    model_json = model.to_json()
+    with open("model.json", "w") as json_file:
+        json_file.write(model_json)
