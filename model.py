@@ -12,6 +12,7 @@ import pandas
 from sklearn.model_selection import train_test_split
 from sklearn.utils import shuffle
 import tensorflow as tf
+tf.python.control_flow_ops = tf
 
 
 flags = tf.app.flags
@@ -197,8 +198,7 @@ if __name__ == "__main__":
     # test_image()
     # exit(0)
     model = Sequential()
-    model.add(Cropping2D(cropping=((50, 20), (0, 0)), input_shape=(80, 80, 3)))
-    model.add(Lambda(lambda x: (x / 255.0) - 0.5))
+    model.add(Lambda(lambda x: (x / 255.0) - 0.5, input_shape=(80, 80, 3)))
     model.add(Convolution2D(24, 5, 5, border_mode='valid', subsample=(2,2)))
     model.add(Activation('relu'))
     model.add(Convolution2D(64, 3, 3, border_mode='valid', subsample=(2,2)))
