@@ -86,43 +86,43 @@ My first step was to use a simple convolution neural network model of two convol
 
 But I found the data was imbalanced and the car in the simulator was driving in a straight line.
 
-![imbalanced data][1.png]
+![1][image1]
 
 I tried to use images from left and right camera with a correction value added to steering values.
 
 
-![imbalanced data][2.png]
+![2][image2]
 
 I limited number of data between 0.0 and 0.1 to 500. 
 
-![imbalanced data][3.png]
+![3][image3]
 
 Lastly, If the steering value is larger than 0.15, I made steering value larger by using left or right camera. the steering value is larger than 0.2, I added the modified data twice to further combat the imbalance problem. 
 
-![imbalanced data][4.png]
+![4][image4]
 
 I also used random brightness, flipping the image in the generator for data augmentation. The following picture showed all data used in the training process.
 
-![imbalanced data][5.png]
+![5][image5]
 
 In order to gauge how well the model was working, I split my image and steering angle data into a training and 10% validation set. I found that my first model had a low mean squared error on the training set but a high mean squared error on the validation set and the mse did not drop significantly after each epochs. This implied that the model was overfitting. 
 
 To combat the overfitting, I added dropout layers and used l2 regularization. The car could drive but could not turn well and fell off in some corners. The validation loss is still quite high.
 
-![validation loss][6.png]
+![6][image6]
 
 Then I thought my neural network with two convolutional layers was too simple, so I started an AWS instance and used an architecture from https://github.com/ancabilloni/SDC-P3-BehavioralCloning, which similar to Nvidia's network.
 
 Training process:
 
-![validation loss][7.png]
+![7][image7]
 
 At the end of the process, the vehicle is able to drive autonomously around the track without leaving the road.
 
 ####2. Final Model Architecture
 
 ````
-____________________________________________________________________________________________________
+work____________________________________________________________________________________________________
 Layer (type)                     Output Shape          Param #     Connected to                     
 ====================================================================================================
 lambda_1 (Lambda)                (None, 64, 64, 3)     0           lambda_input_1[0][0]             
@@ -169,3 +169,11 @@ Total params: 140,625
 Trainable params: 140,625
 Non-trainable params: 0
 ````
+
+### Conclusion & Future work
+
+1. Balancing the dataset is super important. I have tried throwing away more data by `angle < np.random.uniform()', but this will cause the car to drive abruptly and cannot drive straight.
+
+2. To successfully complete track 2, more training data is needed. Also, I want to try random horizontal shifts.
+
+3. Regularization is very helpful.
