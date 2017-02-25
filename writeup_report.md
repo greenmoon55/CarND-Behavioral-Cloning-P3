@@ -122,7 +122,7 @@ At the end of the process, the vehicle is able to drive autonomously around the 
 ####2. Final Model Architecture
 
 ````
-____________________________________________________________________________________________________
+work____________________________________________________________________________________________________
 Layer (type)                     Output Shape          Param #     Connected to                     
 ====================================================================================================
 lambda_1 (Lambda)                (None, 64, 64, 3)     0           lambda_input_1[0][0]             
@@ -169,3 +169,11 @@ Total params: 140,625
 Trainable params: 140,625
 Non-trainable params: 0
 ````
+
+### Conclusion & Future work
+
+1. Balancing the dataset is super important. I have tried throwing away more data by `angle < np.random.uniform()', but this will cause the car to drive abruptly and cannot drive straight.
+
+2. To successfully complete track 2, more training data is needed. Also, I want to try random horizontal shifts.
+
+3. Regularization is very helpful.
