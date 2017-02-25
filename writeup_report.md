@@ -19,9 +19,9 @@ The goals / steps of this project are the following:
 [//]: # (Image References)
 
 [image1]: ./examples/1.png "Original Steering"
-[image2]: ./examples/placeholder.png "Grayscaling"
-[image3]: ./examples/placeholder_small.png "Recovery Image"
-[image4]: ./examples/placeholder_small.png "Recovery Image"
+[image2]: ./examples/2.png "Data from three cameras"
+[image3]: ./examples/3.png "Data"
+[image4]: ./examples/4.png "Final data"
 [image5]: ./examples/placeholder_small.png "Recovery Image"
 [image6]: ./examples/placeholder_small.png "Normal Image"
 [image7]: ./examples/placeholder_small.png "Flipped Image"
@@ -85,9 +85,24 @@ My first step was to use a simple convolution neural network model of two convol
 
 In order to gauge how well the model was working, I split my image and steering angle data into a training and 10% validation set. I found that my first model had a low mean squared error on the training set but a high mean squared error on the validation set and the mse did not drop significantly after each epochs. This implied that the model was overfitting. 
 
-But I found the data was imbalanced. 
+But I found the data was imbalanced and the car was driving in a straight line.
 
 ![imbalanced data][1.png]
+
+I tried to use images from left and right camera with a correction value added to steering values.
+
+
+![imbalanced data][2.png]
+
+I limited number of data between 0.0 and 0.1 to 500. 
+
+![imbalanced data][3.png]
+
+Lastly, If the steering value is larger than 0.15, I made steering value larger by using left or right camera. the steering value is larger than 0.2, I added the modified data twice to further combat the imbalance problem. 
+
+![imbalanced data][4.png]
+
+
 To combat the overfitting, I modified the model so that ...
 
 Then I ... 
