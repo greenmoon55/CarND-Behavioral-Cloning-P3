@@ -121,6 +121,7 @@ At the end of the process, the vehicle is able to drive autonomously around the 
 
 ####2. Final Model Architecture
 
+````
 ____________________________________________________________________________________________________
 Layer (type)                     Output Shape          Param #     Connected to                     
 ====================================================================================================
@@ -167,3 +168,4 @@ dense_5 (Dense)                  (None, 1)             11          dense_4[0][0]
 Total params: 140,625
 Trainable params: 140,625
 Non-trainable params: 0
+````
